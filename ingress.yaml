@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: auth-ingress
+  namespace: default
+  annotations:
+    # This annotation configures ALB
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+    # You can also add SSL configurations here if you have SSL certificates for HTTPS
+spec:
+  ingressClassName: alb
+  rules:
+    - host: api-ganesh-k8s-local-kvp9h3-0a65a8cd8c3c64ee.elb.ap-south-1.amazonaws.com
+      http:
+        paths:
+        - path: /signin
+          pathType: Prefix
+          backend:
+            service:
+              name: signin-service
+              port:
+                number: 80
+        - path: /signup
+          pathType: Prefix
+          backend:
+            service:
+              name: signup-service
+              port:
+                number: 80
+

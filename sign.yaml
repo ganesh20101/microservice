@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: signin-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: signin
+  template:
+    metadata:
+      labels:
+        app: signin
+    spec:
+      containers:
+      - name: signin
+        image: ganesh20101/awsdamo:1.0
+        ports:
+        - containerPort: 80
+
